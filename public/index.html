@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AFFILIATE Content Generator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b1220; --panel:#0f172a; --muted:#96a0b5; --text:#e9edf4;
+      --line:#23314f; --brand:#8b5cf6; --brand-2:#6366f1; --ok:#22c55e;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:radial-gradient(1200px 600px at 50% -10%,#14203d,#0b1220 60%);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;}
+    .wrap{max-width:1200px;margin:22px auto;padding:0 16px}
+    header{text-align:center;margin-bottom:16px}
+    h1{margin:0;font-size:24px;letter-spacing:.06em}
+    header p{margin:6px 0 0;color:var(--muted);font-size:13px}
+    .grid{display:flex;gap:18px;align-items:flex-start}
+    @media(max-width:980px){.grid{flex-direction:column}}
+    .panel{background:linear-gradient(180deg,#0f172a 0,#0b1220 100%);border:1px solid var(--line);border-radius:24px;box-shadow:0 22px 60px rgba(0,0,0,.5)}
+    .left{flex:0 0 360px;padding:16px}
+    .right{flex:1;padding:16px;max-height:calc(100vh - 150px);overflow:auto}
+    .block{background:radial-gradient(700px 300px at -10% -10%,rgba(139,92,246,.15),transparent 40%),var(--panel);
+      border:1px solid #263658;border-radius:18px;padding:12px;margin-bottom:10px}
+    .btitle{font-size:13px;font-weight:700;margin-bottom:8px;display:flex;justify-content:space-between}
+    .sub{color:var(--muted);font-size:12px;margin-bottom:8px}
+    .btn{border:1px solid #3a4a75;background:linear-gradient(180deg,#1a2444,#131b32);color:#cdd7ef;padding:9px 14px;border-radius:999px;cursor:pointer;font-weight:600;font-size:13px}
+    .btn:hover{border-color:#576aa1}
+    .btn.pri{background:linear-gradient(135deg,var(--brand),var(--brand-2));border-color:transparent;color:#fff;box-shadow:0 8px 26px rgba(99,102,241,.45)}
+    .btn.full{width:100%}
+    .btn.sm{padding:7px 10px;font-size:12px}
+    input[type="file"]{display:none}
+    .fileline{display:flex;gap:10px;align-items:center}
+    .fname{font-size:11px;color:var(--muted);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    textarea,select,input[type="text"]{width:100%;border-radius:12px;border:1px solid #2a395e;background:#0b1326;color:var(--text);padding:8px 10px;outline:none;font-size:12px}
+    textarea:focus,select:focus,input:focus{border-color:#5b73b8;box-shadow:0 0 0 1px rgba(99,102,241,.35)}
+    textarea{min-height:70px;resize:vertical}
+    .row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .check{display:flex;gap:8px;align-items:center;color:var(--muted);font-size:12px;margin-top:6px}
+    .thumb{border:1px solid #334161;border-radius:14px;background:#0b1326;padding:8px}
+    .thumb > div{border-radius:10px;min-height:150px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:12px;background:#020617;overflow:hidden}
+    .thumb img{width:100%;display:block;object-fit:cover}
+    .status{display:inline-flex;gap:8px;align-items:center;background:#0e1a34;border:1px solid #23314f;padding:6px 10px;border-radius:999px;font-size:11px;color:#c7d2fe}
+    .dot{width:7px;height:7px;border-radius:999px;background:var(--ok)}
+    .secHead{display:flex;justify-content:space-between;align-items:center;margin:10px 2px 6px}
+    .secHead h3{margin:0;font-size:14px}
+    .count{font-size:11px;color:var(--muted)}
+    .strip{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(130px,1fr);gap:10px;overflow-x:auto;padding-bottom:4px}
+    .card{background:linear-gradient(180deg,#121d37,#0c1427);border:1px solid #2a3a61;border-radius:18px;padding:8px;min-width:130px}
+    .thumb2{position:relative;border-radius:12px;overflow:hidden;background:#0b1326;color:#9fb3d9;height:180px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:11px;padding:8px}
+    .pill{position:absolute;top:6px;left:6px;background:#0e1831;border:1px solid #2a3a61;border-radius:999px;padding:3px 6px;font-size:10px}
+    .rowbtn{display:flex;gap:6px;margin-top:6px}
+    .btnchip{flex:1;border-radius:999px;border:1px solid #4b5f9b;background:rgba(99,102,241,.15);color:#dbe3ff;font-size:11px;padding:6px 8px;cursor:pointer}
+    .btnround{width:28px;height:28px;border-radius:999px;border:1px solid #3b4b79;background:#0e1831;color:#afbef2;cursor:pointer}
+    .foot{font-size:11px;color:#a9b7d7;margin-top:6px;background:#0c152b;border:1px dashed #2c3b63;border-radius:8px;padding:6px}
+    /* thumbs grid for extra images */
+    .grid-thumbs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:8px}
+    .thumb-it{position:relative;border:1px solid #334161;border-radius:10px;overflow:hidden;background:#0b1326}
+    .thumb-it img{width:100%;height:100%;aspect-ratio:1/1;object-fit:cover;display:block}
+    .thumb-x{position:absolute;top:4px;right:4px;background:#1f2937;border:1px solid #42587f;color:#dbe3ff;border-radius:999px;font-size:11px;line-height:1;padding:4px 6px;cursor:pointer}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>AFFILIATE Content Generator</h1>
+      <p>Buat konten affiliate bisa dengan rebahan aja!</p>
+    </header>
+
+    <div class="grid">
+      <!-- LEFT -->
+      <aside class="panel left">
+        <!-- 1 Upload -->
+        <div class="block">
+          <div class="btitle">
+            <span>1. Unggah Foto</span>
+            <span class="sub">Unggah Foto Produk (Utama)</span>
+          </div>
+          <div class="fileline">
+            <label class="btn pri" for="fileMain">Pilih File</label>
+            <div class="fname" id="fname">Belum ada file</div>
+            <input id="fileMain" type="file" accept="image/*"/>
+          </div>
+          <div class="thumb" style="margin-top:8px">
+            <div id="mainPreview">Preview foto produk akan muncul di sini</div>
+          </div>
+
+          <button class="btn" id="btnAddSupport" style="margin-top:10px">+ Tambah Foto Produk Pendukung</button>
+          <input id="fileSupport" type="file" accept="image/*" multiple />
+          <div id="suppInfo" class="sub"></div>
+          <div id="suppGrid" class="grid-thumbs"></div>
+        </div>
+
+        <!-- 2 Deskripsi -->
+        <div class="block">
+          <div class="btitle">2. Jelaskan Produk Anda & Konsep Foto</div>
+          <textarea id="desc" placeholder="Contoh: Jersey streetwear oversize pink-putih nuansa atletik urban..."></textarea>
+          <div class="check">
+            <input type="checkbox" id="captionOn"/>
+            <label for="captionOn">Tambahkan tulisan pada Hasil</label>
+          </div>
+        </div>
+
+        <!-- 3 Model -->
+        <div class="block">
+          <div class="btitle">3. Unggah Foto Model (opsional, maks 2)</div>
+          <button class="btn" id="btnAddModel">+ Tambah Model</button>
+          <input id="fileModel" type="file" accept="image/*" multiple />
+          <div class="sub">Maks 2 foto</div>
+          <div id="modelGrid" class="grid-thumbs"></div>
+
+          <div class="row2" style="margin-top:10px">
+            <div>
+              <div class="sub">Karakteristik Model AI</div>
+              <select id="gender">
+                <option value="AUTO">AUTO</option>
+                <option value="PRIA">PRIA</option>
+                <option value="WANITA">WANITA</option>
+              </select>
+            </div>
+            <div>
+              <div class="sub">Usia</div>
+              <select id="age">
+                <option value="REMAJA">REMAJA</option>
+                <option value="DEWASA">DEWASA</option>
+                <option value="ANAK">ANAK</option>
+              </select>
+            </div>
+          </div>
+          <div class="check"><input id="hijab" type="checkbox"><label for="hijab">Model Berjilbab?</label></div>
+        </div>
+
+        <!-- 4 Rasio -->
+        <div class="block">
+          <div class="btitle">4. Pilih Rasio</div>
+          <select id="ratio">
+            <option value="9:16">POTRAIT (9:16)</option>
+            <option value="16:9">LANDSCAPE (16:9)</option>
+            <option value="1:1">SQUARE (1:1)</option>
+          </select>
+        </div>
+
+        <!-- 5 Bahasa -->
+        <div class="block">
+          <div class="btitle">5. Pengaturan Bahasa & Aksen</div>
+          <div class="sub">Bahasa Narasi & Caption</div>
+          <select id="lang">
+            <option value="id">Indonesia</option>
+            <option value="en">English</option>
+          </select>
+          <div class="sub" style="margin-top:8px">Aksen Suara (opsional, untuk Narasi)</div>
+          <input id="accent" type="text" placeholder="Contoh: Jawa medok, Batak, British English"/>
+        </div>
+
+        <button class="btn pri full" id="generate">Generate Konten</button>
+      </aside>
+
+      <!-- RIGHT -->
+      <section class="panel right">
+        <div style="margin-bottom:12px">
+          <span class="status"><span class="dot"></span><span id="status">Siap generate konten dari foto kamu</span></span>
+        </div>
+
+        <!-- BROLL -->
+        <div class="secHead">
+          <h3>Foto B-Roll</h3>
+          <span class="count" id="countB">0 foto berhasil dibuat</span>
+        </div>
+        <div class="strip" id="listB"></div>
+
+        <!-- UGC -->
+        <div class="secHead" style="margin-top:12px">
+          <h3>Foto UGC</h3>
+          <span class="count" id="countU">0 foto berhasil dibuat</span>
+        </div>
+        <div class="strip" id="listU"></div>
+
+        <!-- ADS -->
+        <div class="secHead" style="margin-top:12px">
+          <h3>Foto Komersial</h3>
+          <span class="count" id="countA">0 foto berhasil dibuat</span>
+        </div>
+        <div class="strip" id="listA"></div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    // ===== state =====
+    const supportImages = []; // base64
+    const modelImages = [];   // base64 (max 2)
+
+    // ===== upload utama =====
+    const fileMain = document.getElementById("fileMain");
+    const fname = document.getElementById("fname");
+    const mainPreview = document.getElementById("mainPreview");
+
+    fileMain.addEventListener("change", e=>{
+      const f = e.target.files?.[0];
+      if(!f) return;
+      fname.textContent = f.name;
+      const r = new FileReader();
+      r.onload = ev=>{
+        mainPreview.innerHTML = `<img src="${ev.target.result}" alt="produk">`;
+        mainPreview.dataset.img = ev.target.result; // simpan base64
+      };
+      r.readAsDataURL(f);
+    });
+
+    // ===== helpers =====
+    function readFilesAsDataURL(fileList){
+      return Promise.all(Array.from(fileList||[]).map(f=>new Promise((res,rej)=>{
+        const r=new FileReader(); r.onload=e=>res(e.target.result); r.onerror=rej; r.readAsDataURL(f);
+      })));
+    }
+    function renderThumbGrid(container, dataArr, onRemove){
+      container.innerHTML = "";
+      dataArr.forEach((src,idx)=>{
+        const el=document.createElement("div");
+        el.className="thumb-it";
+        el.innerHTML=`<img src="${src}"><button class="thumb-x" title="Hapus">✕</button>`;
+        el.querySelector(".thumb-x").onclick=()=>{ onRemove(idx); };
+        container.appendChild(el);
+      });
+    }
+
+    // ===== produk pendukung =====
+    const btnAddSupport = document.getElementById("btnAddSupport");
+    const fileSupport = document.getElementById("fileSupport");
+    const suppGrid = document.getElementById("suppGrid");
+    const suppInfo = document.getElementById("suppInfo");
+
+    btnAddSupport.onclick = ()=> fileSupport.click();
+    fileSupport.onchange = async (e)=>{
+      const added = await readFilesAsDataURL(e.target.files);
+      const ROOM = Math.max(0, 12 - supportImages.length);
+      supportImages.push(...added.slice(0, ROOM));
+      renderThumbGrid(suppGrid, supportImages, (i)=>{
+        supportImages.splice(i,1);
+        renderThumbGrid(suppGrid, supportImages, arguments.callee);
+        suppInfo.textContent = `${supportImages.length} foto pendukung dipilih`;
+      });
+      suppInfo.textContent = `${supportImages.length} foto pendukung dipilih`;
+      fileSupport.value="";
+    };
+
+    // ===== foto model (maks 2) =====
+    const btnAddModel = document.getElementById("btnAddModel");
+    const fileModel = document.getElementById("fileModel");
+    const modelGrid = document.getElementById("modelGrid");
+
+    btnAddModel.onclick = ()=> fileModel.click();
+    fileModel.onchange = async (e)=>{
+      const added = await readFilesAsDataURL(e.target.files);
+      const ROOM = Math.max(0, 2 - modelImages.length);
+      if(ROOM<=0){ alert("Maksimum 2 foto model."); fileModel.value=""; return; }
+      modelImages.push(...added.slice(0, ROOM));
+      renderThumbGrid(modelGrid, modelImages, (i)=>{
+        modelImages.splice(i,1);
+        renderThumbGrid(modelGrid, modelImages, arguments.callee);
+      });
+      fileModel.value="";
+    };
+
+    // ===== kartu hasil =====
+    function card(item, category){
+      const el = document.createElement("div");
+      el.className="card";
+      el.dataset.prompt = item.prompt || "";
+      el.dataset.category = category;
+      el.innerHTML = `
+        <div class="thumb2">
+          <div class="pill">${item.label}</div>
+          <span>${item.preview || "Preview scene"}</span>
+        </div>
+        <div class="rowbtn">
+          <button class="btnround" title="Download">⬇</button>
+          <button class="btnchip js-move">Buat Saran Gerakan</button>
+          ${category==="ugc" ? '<button class="btnchip js-nar">Buat Narasi UGC</button>' : ''}
+        </div>
+        <div class="foot">${item.prompt || ""}</div>
+      `;
+
+      const lang = document.getElementById("lang").value;
+      const ratio = document.getElementById("ratio").value;
+
+      el.querySelector(".js-move").onclick = async ()=>{
+        try{
+          const r = await fetch("/api/motion-hints",{method:"POST",headers:{"Content-Type":"application/json"},
+            body:JSON.stringify({ language:lang, ratio, forCategory:category.toUpperCase(), prompt:item.prompt })});
+          const d = await r.json();
+          if(d.status==="ok"){
+            alert((d.hints||[]).map(h=>`• ${h.label}\n  - ${(h.beats||[]).join("\n  - ")}`).join("\n\n") || "Tidak ada saran.");
+          }else alert("Gagal membuat saran gerakan.");
+        }catch{ alert("Gagal menghubungi server."); }
+      };
+
+      const narBtn = el.querySelector(".js-nar");
+      if(narBtn){
+        narBtn.onclick = async ()=>{
+          try{
+            const desc = document.getElementById("desc").value;
+            const r = await fetch("/api/ugc/narration",{method:"POST",headers:{"Content-Type":"application/json"},
+              body:JSON.stringify({ language:lang, ratio, desc })});
+            const d = await r.json();
+            if(d.status==="ok"){
+              const n=d.narration;
+              alert(`HOOK: ${n.hook}\n\nBODY: ${n.body}\n\nCTA: ${n.cta}\n\nCaption: ${n.caption}\nHashtags: ${(n.hashtags||[]).join(" ")}`);
+            }else alert("Gagal membuat narasi.");
+          }catch{ alert("Gagal menghubungi server."); }
+        };
+      }
+      return el;
+    }
+    function render(listEl,countEl,items,cat){
+      listEl.innerHTML="";
+      (items||[]).forEach(i=>listEl.appendChild(card(i,cat)));
+      countEl.textContent = `${items?.length||0} foto berhasil dibuat`;
+    }
+
+    // ===== generate =====
+    const statusText = document.getElementById("status");
+    document.getElementById("generate").onclick = async ()=>{
+      const payload = {
+        desc: document.getElementById("desc").value,
+        ratio: document.getElementById("ratio").value,
+        language: document.getElementById("lang").value,
+        gender: document.getElementById("gender").value,
+        age: document.getElementById("age").value,
+        hijab: document.getElementById("hijab").checked,
+        captionOn: document.getElementById("captionOn").checked,
+        accent: document.getElementById("accent").value,
+        imageData: mainPreview.dataset.img || null,
+        supportImages, // ikut terkirim ke backend
+        modelImages    // ikut terkirim ke backend
+      };
+      try{
+        statusText.textContent = "Generate B-Roll ...";
+        const b = await fetch("/api/generate/broll",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)}).then(r=>r.json());
+        render(document.getElementById("listB"),document.getElementById("countB"),b.items,"broll");
+
+        statusText.textContent = "Generate UGC ...";
+        const u = await fetch("/api/generate/ugc",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)}).then(r=>r.json());
+        render(document.getElementById("listU"),document.getElementById("countU"),u.items,"ugc");
+
+        statusText.textContent = "Generate Komersial ...";
+        const a = await fetch("/api/generate/ads",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)}).then(r=>r.json());
+        render(document.getElementById("listA"),document.getElementById("countA"),a.items,"ads");
+
+        statusText.textContent = "Selesai. Kamu bisa klik tombol di setiap kartu.";
+      }catch(e){
+        console.error(e);
+        statusText.textContent = "Gagal generate. Cek koneksi/API key server.";
+      }
+    };
+  </script>
+</body>
+</html>
